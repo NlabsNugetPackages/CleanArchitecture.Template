@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Nlabs.CleanArchitecture</id>
+    <version>8.0.2</version>
+    <title>ASP.NET Clean Architecture Solution</title>
+    <authors>Cuma Kose</authors>
+    <owners>Cuma Kose</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A template for creating projects using Clean Architecture.</description>
+    <releaseNotes>Initial release of the project template.</releaseNotes>
+    <language>en-US</language>
+    <projectUrl>https://github.com/turkmvc</projectUrl>
+    <tags>Web ASP.NET "Clean Architecture" clean-architecture clean architecture turkmvc SOLID</tags>
+    <repository type="git" url="https://github.com/NlabsNugetPackages/CleanArchitecture.Template"/>
+    <license type="file">LICENSE.txt</license>
+    <readme>README.md</readme>
+    <icon>./images/icon.jpeg</icon>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+  </metadata>
+  <files>
+    <file src=".\**" target="content" exclude="**\bin\**;**\obj\**;**\.git\**;**\.github\**;**\*.user;**\.vs\**;**\.vscode\**;**\.gitignore;**\sample\**" />
+    <file src="README.md" target="" />
+    <file src="LICENSE.txt" target="" />
+    <file src="images/icon.jpeg" target="images/icon.jpeg" />
+  </files>
+</package>
