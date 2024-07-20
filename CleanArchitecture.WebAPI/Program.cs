@@ -1,23 +1,32 @@
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.WebAPI.Middlewares;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using Nlabs.DefaultCorsPolicy;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddDefaultCors();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddProblemDetails();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers().AddOData(options =>
+{
+    options.EnableQueryFeatures();
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
@@ -45,10 +54,18 @@ builder.Services.AddSwaggerGen(setup =>
                 });
 });
 
-var app = builder.Build();
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("fixed", options =>
+    {
+        options.QueueLimit = 100;
+        options.PermitLimit = 100;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.Window = TimeSpan.FromSeconds(1);
+    });
+});
 
-//middlewares
-// Configure the HTTP request pipeline.
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -58,12 +75,27 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseCors(p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+app.UseRateLimiter();
+
+app.UseExceptionHandler();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers().RequireRateLimiting("fixed");
 
 ExtensionsMiddleware.CreateFirstUser(app);
+
+app.MapHealthChecks("/health-check", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+    ResultStatusCodes =
+    {
+        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+        [HealthStatus.Degraded] = StatusCodes.Status200OK,
+        [HealthStatus.Unhealthy] = StatusCodes.Status200OK,
+    }
+});
 
 app.Run();

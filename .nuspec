@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Nlabs.CleanArchitecture</id>
-    <version>8.0.2</version>
+    <version>8.0.4</version>
     <title>ASP.NET Clean Architecture Solution</title>
     <authors>Cuma Kose</authors>
     <owners>Cuma Kose</owners>
@@ -21,7 +21,7 @@
     </packageTypes>
   </metadata>
   <files>
-    <file src=".\**" target="content" exclude="**\bin\**;**\obj\**;**\.git\**;**\.github\**;**\*.user;**\.vs\**;**\.vscode\**;**\.gitignore;**\sample\**" />
+    <file src=".\**" target="content" exclude="**\bin\**;**\obj\**;**\.git\**;**\.github\**;**\*.user;**\.vs\**;**\.vscode\**;**\.gitignore;**\sample\**;**\images\**" />
     <file src="README.md" target="" />
     <file src="LICENSE.txt" target="" />
     <file src="images/icon.jpeg" target="images/icon.jpeg" />

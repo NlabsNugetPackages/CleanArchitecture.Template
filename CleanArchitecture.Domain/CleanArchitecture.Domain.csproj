@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
     <PackageReference Include="Nlabs.GenericRepository" Version="1.0.0" />
     <PackageReference Include="Nlabs.Result" Version="8.0.1" />
   </ItemGroup>

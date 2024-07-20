@@ -1,6 +1,37 @@
-@WebAPI_HostAddress = http://localhost:5036
+@WebAPI_HostAddress = https://localhost:7064
 
-GET {{WebAPI_HostAddress}}/
+POST {{WebAPI_HostAddress}}/api/users/getall?$top=10&$orderby=FullName&$select=fullName
 Accept: application/json
 
 ###
+
+POST {{WebAPI_HostAddress}}/api/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "userName": "demmomomo2",
+    "email": "demmomomo2@gmail.com",
+    "firstName": "First",
+    "lastName": "Last",
+    "password": "Password123!",    
+    "rePassword": "Password123!"
+}
+
+###
+POST {{WebAPI_HostAddress}}/api/categories/getall?$top=10&$orderby=Name&$select=name
+Accept: application/json
+
+###
+
+POST {{WebAPI_HostAddress}}/api/categories/create
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "test"
+}
+ 
+###
+POST {{WebAPI_HostAddress}}/health-check
+Accept: application/json

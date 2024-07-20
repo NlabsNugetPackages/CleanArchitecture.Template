@@ -1,10 +1,12 @@
 ﻿using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Infrastructure.BackgroundServices;
 using CleanArchitecture.Infrastructure.Context;
 using CleanArchitecture.Infrastructure.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Nlabs.GenericRepository;
 using Scrutor;
 using System.Reflection;
@@ -53,6 +55,14 @@ public static class DependencyInjection
             .AsImplementedInterfaces()
             .WithScopedLifetime();
         });
+
+        services.AddHealthChecks()
+            .AddCheck("health-check", () => HealthCheckResult.Healthy())
+            .AddDbContextCheck<ApplicationDbContext>();
+
+        services.AddHttpClient();
+
+        services.AddHostedService<HealthCheckBackgroundService>();
 
         return services;
     }
