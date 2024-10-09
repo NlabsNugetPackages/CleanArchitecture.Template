@@ -30,6 +30,7 @@ builder.Services.AddControllers().AddOData(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
+    setup.SwaggerDoc("v1", new OpenApiInfo { Title = "Nlabs Clean Architecture WebAPI", Version = "v1" });
     var jwtSecuritySheme = new OpenApiSecurityScheme
     {
         BearerFormat = "JWT",
@@ -67,6 +68,7 @@ builder.Services.AddRateLimiter(options =>
 
 var app = builder.Build();
 
+//eger hostinge atacaksanýz if blogu içerisindeki kodlarý if dýþýna taþýyýnýz ve if blogunu siliniz
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
